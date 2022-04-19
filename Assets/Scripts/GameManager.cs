@@ -51,9 +51,14 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Deck").GetComponent<DeckScript>().Shuffle();
         playerScript.StartHand();
         dealerScript.StartHand();
-        // Update score displayed
+        // Update scores displayed
         scoreText.text = "Hand: " + playerScript.handValue.ToString();
         dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
+        //Adjust buttons visability
+        dealBtn.gameObject.SetActive(false);
+        hitBtn.gameObject.SetActive(true);
+        standBtn.gameObject.SetActive(true);
+        standBtnText.text = "Stand";
     }
 
     void HitClicked()
