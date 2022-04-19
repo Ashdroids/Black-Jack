@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI dealerScoreText;
     public TextMeshProUGUI betsText;
     public TextMeshProUGUI cashText;
-    // public TextMeshProUGUI mainText;
+    public TextMeshProUGUI mainText;
     public Text standBtnText;
 
     [Header ("Card Hiding dealers card")]
@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
 
     void DealClicked()
     {
-        // Hide dealer hand score at start of deal
+        // Hide dealer hand score and main text at start of deal
+        mainText.gameObject.SetActive(false);
         dealerScoreText.gameObject.SetActive(false);
         GameObject.Find("Deck").GetComponent<DeckScript>().Shuffle();
         playerScript.StartHand();
@@ -54,26 +55,35 @@ public class GameManager : MonoBehaviour
         // Update scores displayed
         scoreText.text = "Hand: " + playerScript.handValue.ToString();
         dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
+        // Hide one of dealers cards
+        hideCard.GetComponent<Renderer>().enabled = true;
         //Adjust buttons visability
         dealBtn.gameObject.SetActive(false);
         hitBtn.gameObject.SetActive(true);
         standBtn.gameObject.SetActive(true);
         standBtnText.text = "Stand";
+        // Set standard pot size
+        pot = 40;
+        betsText.text = pot.ToString();
+        playerScript.AdjustMoney(-20);
+        cashText.text = playerScript.GetMoney().ToString();
     }
 
     void HitClicked()
     {
+        //check there is still room on the table
         if(playerScript.GetCard() <= 10)
         {
-            //check there is still room on the table
             playerScript.GetCard();
+            scoreText.text ="Hand: " + playerScript.handValue.ToString();
+            if(playerScript.handValue > 20) RoundOver();
         }
     }
 
     void StandClicked()
     {
         standClicks++;
-        if(standClicks > 1)  Debug.Log("end function");
+        if(standClicks > 1)  RoundOver();
         HitDealer();
         standBtnText.text = "Call";
     }
@@ -85,9 +95,67 @@ public class GameManager : MonoBehaviour
         while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
-            // Dealer score
-
+            dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
+            if(dealerScript.handValue > 20) RoundOver();
         }
+    }
+
+    // Check for winner and loser, hand is over
+    void RoundOver()
+    {
+        // bools for bust and blackjack
+        bool playerBust = playerScript.handValue > 21;
+        bool dealerBust = dealerScript.handValue > 21;
+        bool player21 = playerScript.handValue == 21;
+        bool dealer21 = dealerScript.handValue == 21;
+
+        // If stand has been clicked less than twice & no 21's or busts, quit function
+        if(standClicks < 2 && !playerBust && !dealerBust && !player21 && !dealer21) {return;}
+
+        bool roundOver = true;
+        //Reveal dealers card
+        hideCard.SetActive(false);
+        
+        //All bust, bets returned
+        if(playerBust && dealerBust)
+        {
+            mainText.text = "All Bust: Bets returned";
+            playerScript.AdjustMoney(pot/2);
+        }
+        //if player busts but dealer didn't, or if dealer has higher score, dealer wins
+        else if(playerBust || (!dealerBust && dealerScript.handValue > playerScript.handValue))
+        {
+            mainText.text = "Dealer Wins!";
+        }
+        // if dealer busts and player didn't, or player has more points, player wins
+        else if(dealerBust || playerScript.handValue > dealerScript.handValue)
+        {
+            mainText.text = "You Win!";
+            playerScript.AdjustMoney(pot);
+        }
+        // check for tie, return bets
+        else if(playerScript.handValue == dealerScript.handValue)
+        {
+            mainText.text = "Tie: Bets returned";
+            playerScript.AdjustMoney(pot/2);
+        }
+        else
+        {
+            roundOver = false;
+        }
+        // Set UI up for next hand/turn
+        if(roundOver)
+        {
+            hitBtn.gameObject.SetActive(false);
+            standBtn.gameObject.SetActive(false);
+            dealBtn.gameObject.SetActive(true);
+            hideCard.GetComponent<Renderer>().enabled = false;
+            dealerScoreText.gameObject.SetActive(true);
+            cashText.text = playerScript.GetMoney().ToString();
+            standClicks = 0;
+        } 
+
+
     }
    
 }
