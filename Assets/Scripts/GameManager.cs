@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     void HitClicked()
     {
         //check there is still room on the table
-        if(playerScript.GetCard() <= 10)
+        if(playerScript.cardIndex <= 10)
         {
             playerScript.GetCard();
             scoreText.text ="Hand: " + playerScript.handValue.ToString();
