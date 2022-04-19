@@ -10,7 +10,7 @@ public class DeckScript : MonoBehaviour
 
     void Start() 
     {
-        
+        GetCardValues();
     }
 
     void GetCardValues()

@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     public Button doubleBtn;
     public Button betBtn;
 
-    //Access player/dealer's script
-    PlayerScript playerScript;
-    PlayerScript dealerScript;
+    [Header ("Player/dealer's script")]
+    public PlayerScript playerScript;
+    public PlayerScript dealerScript;
 
     void Start()
     {
@@ -27,7 +27,9 @@ public class GameManager : MonoBehaviour
 
     void DealClicked()
     {
-        
+        GameObject.Find("Deck").GetComponent<DeckScript>().Shuffle();
+        playerScript.StartHand();
+        dealerScript.StartHand();
     }
 
     void HitClicked()
