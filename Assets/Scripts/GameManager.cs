@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         dealerScript.StartHand();
         // Update score displayed
         scoreText.text = "Hand: " + playerScript.handValue.ToString();
+        dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
     }
 
     void HitClicked()
