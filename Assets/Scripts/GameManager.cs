@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     int standClicks = 0;
-    public Text standBtnText;
+    // How much is Bet
+    int pot = 0;
+    
 
     [Header ("Game Buttons")]
     public Button dealBtn;
@@ -18,6 +21,19 @@ public class GameManager : MonoBehaviour
     [Header ("Player/dealer's script")]
     public PlayerScript playerScript;
     public PlayerScript dealerScript;
+
+    [Header ("Text to update HUD")]
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI dealerScoreText;
+    public TextMeshProUGUI betsText;
+    public TextMeshProUGUI cashText;
+    // public TextMeshProUGUI mainText;
+    public Text standBtnText;
+
+    [Header ("Card Hiding dealers card")]
+    public GameObject hideCard;
+
+    
 
     void Start()
     {
@@ -60,7 +76,7 @@ public class GameManager : MonoBehaviour
         {
             dealerScript.GetCard();
             // Dealer score
-            
+
         }
     }
    
