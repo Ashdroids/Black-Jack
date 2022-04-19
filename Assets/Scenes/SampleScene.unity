@@ -1216,7 +1216,7 @@ GameObject:
   - component: {fileID: 723294786}
   - component: {fileID: 723294785}
   m_Layer: 5
-  m_Name: DealerText(TMP) (1)
+  m_Name: DealerText(TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2551,7 +2551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1129410049
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2696,7 +2696,7 @@ MonoBehaviour:
   betsText: {fileID: 1436192620}
   cashText: {fileID: 1816297650}
   standBtnText: {fileID: 737370381}
-  hideCard: {fileID: 0}
+  hideCard: {fileID: 854279647}
 --- !u!4 &1130312569
 Transform:
   m_ObjectHideFlags: 0
@@ -2730,7 +2730,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1193969246
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3095,7 +3095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1415874924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3211,7 +3211,7 @@ GameObject:
   - component: {fileID: 1436192621}
   - component: {fileID: 1436192620}
   m_Layer: 5
-  m_Name: BetText(TMP)
+  m_Name: BetsText(TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3257,7 +3257,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Bet: $0'
+  m_text: 'Bets: $0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f20d4a3696536654bbeb87340ebcaa81, type: 2}
   m_sharedMaterial: {fileID: 1393256149218378084, guid: f20d4a3696536654bbeb87340ebcaa81, type: 2}

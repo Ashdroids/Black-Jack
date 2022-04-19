@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour
     public int handValue = 0;
 
     // Betting Money
-    //int money = 1000;
+    int money = 1000;
 
     // Array of card objects on table
     public GameObject[] hand;
@@ -45,8 +45,39 @@ public class PlayerScript : MonoBehaviour
             aceList.Add(hand[cardIndex].GetComponent<CardScript>());
         }
         // Check if we should use 1 or 11
-        // AceCheck();
+        AceCheck();
         cardIndex++;
         return handValue;
+    }
+
+    public void AceCheck()
+    {
+        // foreach ace in the list (curently on the table)
+        foreach(CardScript ace in aceList)
+        {
+            // if ace = 1 and adding 10 would be under 22
+            if(handValue + 10 < 22 && ace.GetValueOfCard() == 1) 
+            {
+                ace.SetValue(11);
+                handValue += 10;
+            }
+            // else if score is over 21 and ace = 11
+            else if(handValue > 21 && ace.GetValueOfCard() == 11)
+            {
+                ace.SetValue(1);
+                handValue -= 10;
+            }
+        }
+    }
+
+    public void AdjustMoney(int amount)
+    {
+        money += amount;
+    }
+
+// Output players current money amount
+    public int GetMoney()
+    {
+        return money;
     }
 }
