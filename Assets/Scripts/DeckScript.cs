@@ -49,5 +49,18 @@ public class DeckScript : MonoBehaviour
         } 
         
     }
+
+    public int DealCard(CardScript cardScript)
+    {
+        // Already shuffled so can use currentIndex
+        cardScript.SetSprite(cardSprites[currentIndex]);
+        cardScript.SetValue(cardValues[currentIndex++]); // +1 to index after value set
+        return cardScript.GetValueOfCard();
+    }
+
+    public Sprite GetCardBack()
+    {
+        return cardSprites[0];
+    }
     
 }
