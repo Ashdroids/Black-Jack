@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    int standClicks = 0;
+    public Text standBtnText;
+
     [Header ("Game Buttons")]
     public Button dealBtn;
     public Button hitBtn;
@@ -34,14 +37,31 @@ public class GameManager : MonoBehaviour
 
     void HitClicked()
     {
-        
+        if(playerScript.GetCard() <= 10)
+        {
+            //check there is still room on the table
+            playerScript.GetCard();
+        }
     }
 
     void StandClicked()
     {
-        
+        standClicks++;
+        if(standClicks > 1)  Debug.Log("end function");
+        HitDealer();
+        standBtnText.text = "Call";
     }
 
     //void DoubleClicked(){}
+
+    void HitDealer()
+    {
+        while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
+        {
+            dealerScript.GetCard();
+            // Dealer score
+            
+        }
+    }
    
 }
