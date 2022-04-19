@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     //Access player/dealer's script
     PlayerScript playerScript;
     PlayerScript dealerScript;
-    
+
     void Start()
     {
         dealBtn.onClick.AddListener(() => DealClicked());
