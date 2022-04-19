@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour
 
     void DealClicked()
     {
+        //Reset Round, hide text, prep for new hand
+        playerScript.ResetHand();
+        dealerScript.ResetHand();
         // Hide dealer hand score and main text at start of deal
         mainText.gameObject.SetActive(false);
         dealerScoreText.gameObject.SetActive(false);

@@ -82,15 +82,15 @@ public class PlayerScript : MonoBehaviour
     }
 
     // Hides all cards, resets the needed variables
-    /*public void ResetHand() 
+    public void ResetHand() 
     {
         for(int i = 0; i < hand.Length; i++)
         {
-            hand[i].GetComponent<CardScript>().ResetCard;
+            hand[i].GetComponent<CardScript>().ResetCard();
             hand[i].GetComponent<Renderer>().enabled = false;
         }
         cardIndex = 0;
         handValue = 0;
         aceList = new List<CardScript>();
-    } */
+    } 
 }
