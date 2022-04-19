@@ -69,9 +69,9 @@ public class GameManager : MonoBehaviour
         standBtnText.text = "Stand";
         // Set standard pot size
         pot = 40;
-        betsText.text = pot.ToString();
+        betsText.text = "Bets: $" + pot.ToString();
         playerScript.AdjustMoney(-20);
-        cashText.text = playerScript.GetMoney().ToString();
+        cashText.text = "$" + playerScript.GetMoney().ToString();
     }
 
     void HitClicked()
@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
         bool roundOver = true;
         //Reveal dealers card
         hideCard.SetActive(false);
+        mainText.gameObject.SetActive(true);
         
         //All bust, bets returned
         if(playerBust && dealerBust)
@@ -156,7 +157,7 @@ public class GameManager : MonoBehaviour
             dealBtn.gameObject.SetActive(true);
             hideCard.GetComponent<Renderer>().enabled = false;
             dealerScoreText.gameObject.SetActive(true);
-            cashText.text = playerScript.GetMoney().ToString();
+            cashText.text = "$" + playerScript.GetMoney().ToString();
             standClicks = 0;
         } 
     }
@@ -168,9 +169,9 @@ public class GameManager : MonoBehaviour
         // Adds text of bet button so bet amount can later be updated
         // convert to int
         playerScript.AdjustMoney(-betAmount);
-        cashText.text = playerScript.GetMoney().ToString();
+        cashText.text = "$" + playerScript.GetMoney().ToString();
         pot += (betAmount*2);
-        betsText.text = pot.ToString();
+        betsText.text = "Bets: $" + pot.ToString();
 
     }
    
