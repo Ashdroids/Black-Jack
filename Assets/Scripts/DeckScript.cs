@@ -20,7 +20,10 @@ public class DeckScript : MonoBehaviour
         for(int i = 0; i < cardSprites.Length; i++)
         {
             num = i;
+            //count up to amount of cards, 52
             num %= 13;
+            // if there is a remainder after x/13, then the remainder
+            // is used as the value, unless over 10, then use 10
             if(num > 10 || num == 0)
             {
                 num = 10;
