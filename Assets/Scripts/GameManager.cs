@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     int standClicks = 0;
     // How much is Bet
     int pot = 0;
+    int betAmount = 20;
     
 
     [Header ("Game Buttons")]
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         dealBtn.onClick.AddListener(() => DealClicked());
         hitBtn.onClick.AddListener(() => HitClicked());
         standBtn.onClick.AddListener(() => StandClicked());
+        betBtn.onClick.AddListener(() => BetClicked());
         //doubleBtn.onClick.AddListener(() => DoubleClicked());
     }
 
@@ -157,7 +159,18 @@ public class GameManager : MonoBehaviour
             cashText.text = playerScript.GetMoney().ToString();
             standClicks = 0;
         } 
+    }
 
+    //Add money to pot if bet clicked
+    void BetClicked()
+    {
+        //Text newBet = betBtn.GetComponentInChildren(typeof(Text)) as Text;
+        // Adds text of bet button so bet amount can later be updated
+        // convert to int
+        playerScript.AdjustMoney(-betAmount);
+        cashText.text = playerScript.GetMoney().ToString();
+        pot += (betAmount*2);
+        betsText.text = pot.ToString();
 
     }
    
