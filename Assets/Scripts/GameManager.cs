@@ -46,9 +46,13 @@ public class GameManager : MonoBehaviour
 
     void DealClicked()
     {
+        // Hide dealer hand score at start of deal
+        dealerScoreText.gameObject.SetActive(false);
         GameObject.Find("Deck").GetComponent<DeckScript>().Shuffle();
         playerScript.StartHand();
         dealerScript.StartHand();
+        // Update score displayed
+        scoreText.text = "Hand: " + playerScript.handValue.ToString();
     }
 
     void HitClicked()
