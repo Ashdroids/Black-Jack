@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviour
     public Button standBtn;
     public Button doubleBtn;
     public Button betBtn;
+
+    //Access player/dealer's script
+    PlayerScript playerScript;
+    PlayerScript dealerScript;
+    
     void Start()
     {
         dealBtn.onClick.AddListener(() => DealClicked());
