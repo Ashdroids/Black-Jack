@@ -93,13 +93,37 @@ public class GameManager : MonoBehaviour
         standBtnText.text = "Call";
     }
 
+        //Add money to pot if bet clicked
+    void BetClicked()
+    {
+        if(playerScript.GetMoney() < betAmount) {return;}
+        //Text newBet = betBtn.GetComponentInChildren(typeof(Text)) as Text;
+        // Adds text of bet button so bet amount can later be updated
+        // convert to int
+        playerScript.AdjustMoney(-betAmount);
+        cashText.text = "$" + playerScript.GetMoney().ToString();
+        pot += (betAmount*2);
+        betsText.text = "Pot: $" + pot.ToString();
+    }
+
     void DoubleClicked()
     {
         //double pot
         //remove half pot from money
+        playerScript.AdjustMoney(-pot/2);
+        cashText.text = "$" + playerScript.GetMoney().ToString();
+        pot += (pot);
+        betsText.text = "Pot: $" + pot.ToString();
         //double/hit/stand button disappears
-        //deal card
-        //standClicks = 2
+        hitBtn.gameObject.SetActive(false);
+        standBtn.gameObject.SetActive(false);
+        doubleBtn.gameObject.SetActive(false);
+        // Deal card
+        HitClicked();
+        HitDealer();
+        // End Round
+        standClicks = 2;
+        RoundOver();
     }
 
     void HitDealer()
@@ -177,27 +201,16 @@ public class GameManager : MonoBehaviour
         // Bet & deal button appears
         betBtn.gameObject.SetActive(true);
         dealBtn.gameObject.SetActive(true);
+        doubleBtn.gameObject.SetActive(false);
         // adjust main text
         mainText.text = "Place your bets";
         // Set standard pot size
         pot = 40;
-        betsText.text = "Bets: $" + pot.ToString();
+        betsText.text = "Pot: $" + pot.ToString();
         playerScript.AdjustMoney(-20);
         cashText.text = "$" + playerScript.GetMoney().ToString();
     }
 
-    //Add money to pot if bet clicked
-    void BetClicked()
-    {
-        if(playerScript.GetMoney() < betAmount) {return;}
-        //Text newBet = betBtn.GetComponentInChildren(typeof(Text)) as Text;
-        // Adds text of bet button so bet amount can later be updated
-        // convert to int
-        playerScript.AdjustMoney(-betAmount);
-        cashText.text = "$" + playerScript.GetMoney().ToString();
-        pot += (betAmount*2);
-        betsText.text = "Bets: $" + pot.ToString();
 
-    }
    
 }

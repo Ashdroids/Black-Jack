@@ -3259,7 +3259,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Bets: $0'
+  m_text: 'Pot: $0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f20d4a3696536654bbeb87340ebcaa81, type: 2}
   m_sharedMaterial: {fileID: 1393256149218378084, guid: f20d4a3696536654bbeb87340ebcaa81, type: 2}
