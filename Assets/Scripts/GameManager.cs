@@ -7,7 +7,6 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     int standClicks = 0;
-    // How much is Bet
     int pot = 0;
     int betAmount = 20;
     
@@ -165,6 +164,7 @@ public class GameManager : MonoBehaviour
     //Add money to pot if bet clicked
     void BetClicked()
     {
+        if(playerScript.GetMoney() < betAmount) {return;}
         //Text newBet = betBtn.GetComponentInChildren(typeof(Text)) as Text;
         // Adds text of bet button so bet amount can later be updated
         // convert to int
