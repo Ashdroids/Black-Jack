@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
 
         bool roundOver = true;
         //Reveal dealers card
-        hideCard.SetActive(false);
+        hideCard.GetComponent<Renderer>().enabled = false;
         mainText.gameObject.SetActive(true);
         
         //All bust, bets returned
