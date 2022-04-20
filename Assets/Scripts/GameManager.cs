@@ -12,26 +12,26 @@ public class GameManager : MonoBehaviour
     
 
     [Header ("Game Buttons")]
-    public Button dealBtn;
-    public Button hitBtn;
-    public Button standBtn;
-    public Button doubleBtn;
-    public Button betBtn;
+    [SerializeField] Button dealBtn;
+    [SerializeField] Button hitBtn;
+    [SerializeField] Button standBtn;
+    [SerializeField] Button doubleBtn;
+    [SerializeField] Button betBtn;
 
     [Header ("Player/dealer's script")]
     public PlayerScript playerScript;
     public PlayerScript dealerScript;
 
     [Header ("Text to update HUD")]
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI dealerScoreText;
-    public TextMeshProUGUI betsText;
-    public TextMeshProUGUI cashText;
-    public TextMeshProUGUI mainText;
-    public Text standBtnText;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI dealerScoreText;
+    [SerializeField] TextMeshProUGUI betsText;
+    [SerializeField] TextMeshProUGUI cashText;
+    [SerializeField] TextMeshProUGUI mainText;
+    [SerializeField] Text standBtnText;
 
     [Header ("Card Hiding dealers card")]
-    public GameObject hideCard;
+    [SerializeField] GameObject hideCard;
 
     
 
@@ -198,12 +198,15 @@ public class GameManager : MonoBehaviour
         //Reset Round, hide text, prep for new hand
         playerScript.ResetHand();
         dealerScript.ResetHand();
-        // Bet & deal button appears
+        // Reset Buttons
         betBtn.gameObject.SetActive(true);
         dealBtn.gameObject.SetActive(true);
         doubleBtn.gameObject.SetActive(false);
-        // adjust main text
+        // adjust text
         mainText.text = "Place your bets";
+        dealerScoreText.gameObject.SetActive(false);
+        scoreText.text ="Hand: ";
+
         // Set standard pot size
         pot = 40;
         betsText.text = "Pot: $" + pot.ToString();
