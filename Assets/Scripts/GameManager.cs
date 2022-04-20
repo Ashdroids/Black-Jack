@@ -109,13 +109,12 @@ public class GameManager : MonoBehaviour
     void BetClicked()
     {
         if(playerScript.GetMoney() < betAmount) {return;}
-        //Text newBet = betBtn.GetComponentInChildren(typeof(Text)) as Text;
-        // Adds text of bet button so bet amount can later be updated
-        // convert to int
         playerScript.AdjustMoney(-betAmount);
         cashText.text = "$" + playerScript.GetMoney().ToString();
         pot += (betAmount*2);
         betsText.text = "Pot: $" + pot.ToString();
+        dealBtn.gameObject.SetActive(true);
+        
     }
 
     void DoubleClicked()
@@ -244,18 +243,16 @@ public class GameManager : MonoBehaviour
         //Reset Round, hide text, prep for new hand
         playerScript.ResetHand();
         dealerScript.ResetHand();
+        pot = 0;
         // Reset Buttons
         betBtn.gameObject.SetActive(true);
-        dealBtn.gameObject.SetActive(true);
         doubleBtn.gameObject.SetActive(false);
         // adjust text
         mainText.text = "Place your bets";
         dealerScoreText.gameObject.SetActive(false);
         scoreText.text ="Hand: ";
         // Set standard pot size
-        pot = 40;
-        betsText.text = "Pot: $" + pot.ToString();
-        playerScript.AdjustMoney(-20);
+        betsText.text = "Pot: $0";
         cashText.text = "$" + playerScript.GetMoney().ToString();
         // Show betting options
         changeBetText.gameObject.SetActive(true);
