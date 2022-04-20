@@ -37,19 +37,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        AddButtonListeners();
+        PlaceBets();
+    }
+
+    void AddButtonListeners()
+    {
         dealBtn.onClick.AddListener(() => DealClicked());
         hitBtn.onClick.AddListener(() => HitClicked());
         standBtn.onClick.AddListener(() => StandClicked());
         betBtn.onClick.AddListener(() => BetClicked());
-        //doubleBtn.onClick.AddListener(() => DoubleClicked());
+        doubleBtn.onClick.AddListener(() => DoubleClicked());
     }
-
 
     void DealClicked()
     {
-        //Reset Round, hide text, prep for new hand
-        playerScript.ResetHand();
-        dealerScript.ResetHand();
         // Hide dealer hand score and main text at start of deal
         mainText.gameObject.SetActive(false);
         dealerScoreText.gameObject.SetActive(false);
@@ -63,14 +65,12 @@ public class GameManager : MonoBehaviour
         hideCard.GetComponent<Renderer>().enabled = true;
         //Adjust buttons visability
         dealBtn.gameObject.SetActive(false);
+        betBtn.gameObject.SetActive(false);
+        doubleBtn.gameObject.SetActive(true);
         hitBtn.gameObject.SetActive(true);
         standBtn.gameObject.SetActive(true);
         standBtnText.text = "Stand";
-        // Set standard pot size
-        pot = 40;
-        betsText.text = "Bets: $" + pot.ToString();
-        playerScript.AdjustMoney(-20);
-        cashText.text = "$" + playerScript.GetMoney().ToString();
+        
     }
 
     void HitClicked()
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
         //check there is still room on the table
         if(playerScript.cardIndex <= 10)
         {
+            doubleBtn.gameObject.SetActive(false);
             playerScript.GetCard();
             scoreText.text ="Hand: " + playerScript.handValue.ToString();
             if(playerScript.handValue > 20) RoundOver();
@@ -92,7 +93,14 @@ public class GameManager : MonoBehaviour
         standBtnText.text = "Call";
     }
 
-    //void DoubleClicked(){}
+    void DoubleClicked()
+    {
+        //double pot
+        //remove half pot from money
+        //double/hit/stand button disappears
+        //deal card
+        //standClicks = 2
+    }
 
     void HitDealer()
     {
@@ -153,12 +161,29 @@ public class GameManager : MonoBehaviour
         {
             hitBtn.gameObject.SetActive(false);
             standBtn.gameObject.SetActive(false);
-            dealBtn.gameObject.SetActive(true);
             hideCard.GetComponent<Renderer>().enabled = false;
             dealerScoreText.gameObject.SetActive(true);
             cashText.text = "$" + playerScript.GetMoney().ToString();
             standClicks = 0;
+            Invoke("PlaceBets", 3f);
         } 
+    }
+
+    void PlaceBets()
+    {
+        //Reset Round, hide text, prep for new hand
+        playerScript.ResetHand();
+        dealerScript.ResetHand();
+        // Bet & deal button appears
+        betBtn.gameObject.SetActive(true);
+        dealBtn.gameObject.SetActive(true);
+        // adjust main text
+        mainText.text = "Place your bets";
+        // Set standard pot size
+        pot = 40;
+        betsText.text = "Bets: $" + pot.ToString();
+        playerScript.AdjustMoney(-20);
+        cashText.text = "$" + playerScript.GetMoney().ToString();
     }
 
     //Add money to pot if bet clicked
