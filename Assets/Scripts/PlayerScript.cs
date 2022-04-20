@@ -6,8 +6,8 @@ public class PlayerScript : MonoBehaviour
 {
     // --- Script used for BOTH Player and Dealer
 
-    public CardScript cardScript;
-    public DeckScript deckScript;
+    [SerializeField] CardScript cardScript;
+    [SerializeField] DeckScript deckScript;
 
 
     // Total value of player/dealer's hand
@@ -75,7 +75,7 @@ public class PlayerScript : MonoBehaviour
         money += amount;
     }
 
-// Output players current money amount
+    // Output players current money amount
     public int GetMoney()
     {
         return money;

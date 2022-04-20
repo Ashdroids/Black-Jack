@@ -23,8 +23,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button decreaseBetBtn;
 
     [Header ("Player/dealer's script")]
-    public PlayerScript playerScript;
-    public PlayerScript dealerScript;
+    [SerializeField] PlayerScript playerScript;
+    [SerializeField] PlayerScript dealerScript;
+    [SerializeField] DeckScript deckScript;
 
     [Header ("Text to update HUD")]
     [SerializeField] TextMeshProUGUI scoreText;
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
         // Hide dealer hand score and main text at start of deal
         mainText.gameObject.SetActive(false);
         dealerScoreText.gameObject.SetActive(false);
-        GameObject.Find("Deck").GetComponent<DeckScript>().Shuffle();
+        deckScript.Shuffle();
         playerScript.StartHand();
         dealerScript.StartHand();
         // Update scores displayed

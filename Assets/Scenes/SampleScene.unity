@@ -3211,6 +3211,7 @@ MonoBehaviour:
   decreaseBetBtn: {fileID: 1049572}
   playerScript: {fileID: 1203926810}
   dealerScript: {fileID: 230289527}
+  deckScript: {fileID: 18475289}
   scoreText: {fileID: 777987219}
   dealerScoreText: {fileID: 723294785}
   betsText: {fileID: 1436192620}
