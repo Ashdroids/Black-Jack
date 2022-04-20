@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     int standClicks = 0;
     int pot = 0;
     int betAmount = 20;
+    bool atMaxBet;
+    bool atMinBet = true;
     
 
     [Header ("Game Buttons")]
@@ -17,6 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button standBtn;
     [SerializeField] Button doubleBtn;
     [SerializeField] Button betBtn;
+    [SerializeField] Button increaseBetBtn;
+    [SerializeField] Button decreaseBetBtn;
 
     [Header ("Player/dealer's script")]
     public PlayerScript playerScript;
@@ -28,7 +32,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI betsText;
     [SerializeField] TextMeshProUGUI cashText;
     [SerializeField] TextMeshProUGUI mainText;
+    [SerializeField] TextMeshProUGUI changeBetText;
     [SerializeField] Text standBtnText;
+    [SerializeField] Text betBtnText;
 
     [Header ("Card Hiding dealers card")]
     [SerializeField] GameObject hideCard;
@@ -48,6 +54,8 @@ public class GameManager : MonoBehaviour
         standBtn.onClick.AddListener(() => StandClicked());
         betBtn.onClick.AddListener(() => BetClicked());
         doubleBtn.onClick.AddListener(() => DoubleClicked());
+        increaseBetBtn.onClick.AddListener(() => IncreaseBetClicked());
+        decreaseBetBtn.onClick.AddListener(() => DecreaseBetClicked());
     }
 
     void DealClicked()
@@ -70,6 +78,10 @@ public class GameManager : MonoBehaviour
         hitBtn.gameObject.SetActive(true);
         standBtn.gameObject.SetActive(true);
         standBtnText.text = "Stand";
+        // Hide bet change options
+        changeBetText.gameObject.SetActive(false);
+        increaseBetBtn.gameObject.SetActive(false);
+        decreaseBetBtn.gameObject.SetActive(false);
         
     }
 
@@ -124,6 +136,40 @@ public class GameManager : MonoBehaviour
         // End Round
         standClicks = 2;
         RoundOver();
+    }
+
+    void IncreaseBetClicked()
+    {
+        if(betAmount == 20)
+        {
+            betAmount = 50;
+            decreaseBetBtn.gameObject.SetActive(true);
+            atMinBet = false;
+        }
+        else if(betAmount == 50)
+        {
+            betAmount = 100;
+            increaseBetBtn.gameObject.SetActive(false);
+            atMaxBet = true;
+        }
+        betBtnText.text = betAmount.ToString();
+    }
+
+    void DecreaseBetClicked()
+    {
+        if(betAmount == 100)
+        {
+            betAmount = 50;
+            increaseBetBtn.gameObject.SetActive(true);
+            atMaxBet = false;
+        }
+        else if(betAmount == 50)
+        {
+            betAmount = 20;
+            decreaseBetBtn.gameObject.SetActive(false);
+            atMinBet = true;
+        }
+        betBtnText.text = betAmount.ToString();
     }
 
     void HitDealer()
@@ -206,12 +252,26 @@ public class GameManager : MonoBehaviour
         mainText.text = "Place your bets";
         dealerScoreText.gameObject.SetActive(false);
         scoreText.text ="Hand: ";
-
         // Set standard pot size
         pot = 40;
         betsText.text = "Pot: $" + pot.ToString();
         playerScript.AdjustMoney(-20);
         cashText.text = "$" + playerScript.GetMoney().ToString();
+        // Show betting options
+        changeBetText.gameObject.SetActive(true);
+        if(!atMaxBet && !atMinBet)
+        {
+            increaseBetBtn.gameObject.SetActive(true);
+            decreaseBetBtn.gameObject.SetActive(true);
+        }
+        else if (atMinBet)
+        {
+            increaseBetBtn.gameObject.SetActive(true);
+        }
+        else if (atMaxBet)
+        {
+            decreaseBetBtn.gameObject.SetActive(true);
+        }
     }
 
 
