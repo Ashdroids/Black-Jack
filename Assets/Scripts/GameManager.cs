@@ -82,6 +82,9 @@ public class GameManager : MonoBehaviour
         changeBetText.gameObject.SetActive(false);
         increaseBetBtn.gameObject.SetActive(false);
         decreaseBetBtn.gameObject.SetActive(false);
+
+        // if 2 cards of same value are dealt, show split button
+        // Create SplitClicked() to play 2 hands
         
     }
 
@@ -99,6 +102,7 @@ public class GameManager : MonoBehaviour
 
     void StandClicked()
     {
+        doubleBtn.gameObject.SetActive(false);
         standClicks++;
         if(standClicks > 1)  RoundOver();
         HitDealer();
