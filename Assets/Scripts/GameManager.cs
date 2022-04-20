@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
         // Hide one of dealers cards
         hideCard.GetComponent<Renderer>().enabled = true;
-        //Adjust buttons visability
+        // Adjust buttons visability
         dealBtn.gameObject.SetActive(false);
         betBtn.gameObject.SetActive(false);
         doubleBtn.gameObject.SetActive(true);
@@ -103,34 +103,38 @@ public class GameManager : MonoBehaviour
 
     void StandClicked()
     {
+        // remove double button
         doubleBtn.gameObject.SetActive(false);
+        // increase standClicks and end round if over 1
         standClicks++;
         if(standClicks > 1)  RoundOver();
+        // deal card to dealer and change stand text to call 
         HitDealer();
         standBtnText.text = "Call";
     }
 
-        //Add money to pot if bet clicked
+        
     void BetClicked()
-    {
+    {   //if not enough money to bet, don't allow
         if(playerScript.GetMoney() < betAmount) {return;}
+        // take bet from money and add double that to pot
         playerScript.AdjustMoney(-betAmount);
         cashText.text = "$" + playerScript.GetMoney().ToString();
         pot += (betAmount*2);
         betsText.text = "Pot: $" + pot.ToString();
+        // remove deal button
         dealBtn.gameObject.SetActive(true);
         
     }
 
     void DoubleClicked()
     {
-        //double pot
-        //remove half pot from money
+        // double pot & remove half pot from money
         playerScript.AdjustMoney(-pot/2);
         cashText.text = "$" + playerScript.GetMoney().ToString();
         pot += (pot);
         betsText.text = "Pot: $" + pot.ToString();
-        //double/hit/stand button disappears
+        // double/hit/stand button disappears
         hitBtn.gameObject.SetActive(false);
         standBtn.gameObject.SetActive(false);
         doubleBtn.gameObject.SetActive(false);
@@ -178,10 +182,12 @@ public class GameManager : MonoBehaviour
 
     void HitDealer()
     {
+        // deal card if dealers hand value is < 16 & there's room on the table
         while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
             dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
+            // end round if dealer bust
             if(dealerScript.handValue > 20) RoundOver();
         }
     }
@@ -230,15 +236,17 @@ public class GameManager : MonoBehaviour
         {
             roundOver = false;
         }
-        // Set UI up for next hand/turn
+        
         if(roundOver)
         {
+            // Set UI up for next hand/turn8
             hitBtn.gameObject.SetActive(false);
             standBtn.gameObject.SetActive(false);
             hideCard.GetComponent<Renderer>().enabled = false;
             dealerScoreText.gameObject.SetActive(true);
             cashText.text = "$" + playerScript.GetMoney().ToString();
             standClicks = 0;
+            // Go to place bets stage after 3 seconds
             Invoke("PlaceBets", 3f);
         } 
     }
