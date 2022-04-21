@@ -6,7 +6,7 @@ public class CardScript : MonoBehaviour
 {
     // Value of card, 2 of clubs = 2 etc
     // public for debug purposes
-    public int value = 0;
+    int value = 0;
 
     public int GetValueOfCard()
     {

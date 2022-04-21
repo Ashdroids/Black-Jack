@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     void AddButtonListeners()
     {
+        // change to call from buttons
         dealBtn.onClick.AddListener(() => DealClicked());
         hitBtn.onClick.AddListener(() => HitClicked());
         standBtn.onClick.AddListener(() => StandClicked());
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
         // Hide dealer hand score and main text at start of deal
         mainText.gameObject.SetActive(false);
         dealerScoreText.gameObject.SetActive(false);
+        // Shuffle and deal
         deckScript.Shuffle();
         playerScript.StartHand();
         dealerScript.StartHand();
@@ -115,21 +117,21 @@ public class GameManager : MonoBehaviour
 
         
     void BetClicked()
-    {   //if not enough money to bet, don't allow
+    {   // if not enough money to bet, don't allow
         if(playerScript.GetMoney() < betAmount) {return;}
         // take bet from money and add double that to pot
         playerScript.AdjustMoney(-betAmount);
         cashText.text = "$" + playerScript.GetMoney().ToString();
         pot += (betAmount*2);
         betsText.text = "Pot: $" + pot.ToString();
-        // remove deal button
+        // show deal button
         dealBtn.gameObject.SetActive(true);
         
     }
 
     void DoubleClicked()
     {
-        // double pot & remove half pot from money
+        // remove half pot from money then double pot
         playerScript.AdjustMoney(-pot/2);
         cashText.text = "$" + playerScript.GetMoney().ToString();
         pot += (pot);
@@ -239,7 +241,7 @@ public class GameManager : MonoBehaviour
         
         if(roundOver)
         {
-            // Set UI up for next hand/turn8
+            // Set UI up for next hand/turn
             hitBtn.gameObject.SetActive(false);
             standBtn.gameObject.SetActive(false);
             hideCard.GetComponent<Renderer>().enabled = false;
@@ -256,7 +258,6 @@ public class GameManager : MonoBehaviour
         //Reset Round, hide text, prep for new hand
         playerScript.ResetHand();
         dealerScript.ResetHand();
-        pot = 0;
         // Reset Buttons
         betBtn.gameObject.SetActive(true);
         doubleBtn.gameObject.SetActive(false);
@@ -264,7 +265,8 @@ public class GameManager : MonoBehaviour
         mainText.text = "Place your bets";
         dealerScoreText.gameObject.SetActive(false);
         scoreText.text ="Hand: ";
-        // Set standard pot size
+        // Reset pot 
+        pot = 0;
         betsText.text = "Pot: $0";
         cashText.text = "$" + playerScript.GetMoney().ToString();
         // Show betting options
