@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     int betAmount = 20;
     bool atMaxBet;
     bool atMinBet = true;
+    bool doubleClicked;
     
 
     [Header ("Game Buttons")]
@@ -134,7 +135,7 @@ public class GameManager : MonoBehaviour
         // remove half pot from money then double pot
         playerScript.AdjustMoney(-pot/2);
         cashText.text = "$" + playerScript.GetMoney().ToString();
-        pot += (pot);
+        pot += pot;
         betsText.text = "Pot: $" + pot.ToString();
         // double/hit/stand button disappears
         hitBtn.gameObject.SetActive(false);
@@ -144,7 +145,7 @@ public class GameManager : MonoBehaviour
         HitClicked();
         HitDealer();
         // End Round
-        standClicks = 2;
+        doubleClicked = true;
         RoundOver();
     }
 
@@ -204,7 +205,7 @@ public class GameManager : MonoBehaviour
         bool dealer21 = dealerScript.handValue == 21;
 
         // If stand has been clicked less than twice & no 21's or busts, quit function
-        if(standClicks < 2 && !playerBust && !dealerBust && !player21 && !dealer21) {return;}
+        if(standClicks < 2 && !playerBust && !dealerBust && !player21 && !dealer21 && !doubleClicked) {return;}
 
         bool roundOver = true;
         //Reveal dealers card
@@ -227,6 +228,7 @@ public class GameManager : MonoBehaviour
         {
             mainText.text = "You Win!";
             playerScript.AdjustMoney(pot);
+        
         }
         // check for tie, return bets
         else if(playerScript.handValue == dealerScript.handValue)

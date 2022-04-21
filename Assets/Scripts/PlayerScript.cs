@@ -24,13 +24,14 @@ public class PlayerScript : MonoBehaviour
     // Tracking aces for 1 to 11 conversion
     List<CardScript> aceList = new List<CardScript>();
 
+// add starting a hand to the player/dealer's hand
     public void StartHand()
     {
         GetCard();
         GetCard();
     }
 
-    // add a hand to the player/dealer's hand
+    
     public int GetCard()
     {
         // Get a card, use deal card to assign sprite and value to card on table
@@ -50,7 +51,7 @@ public class PlayerScript : MonoBehaviour
         return handValue;
     }
 
-    public void AceCheck()
+    void AceCheck()
     {
         // foreach ace in the list (curently on the table)
         foreach(CardScript ace in aceList)
