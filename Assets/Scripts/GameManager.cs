@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     bool atMaxBet;
     bool atMinBet = true;
     bool doubleClicked;
+    Renderer hideCardRenderer;
     
 
     [Header ("Game Buttons")]
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        hideCardRenderer = hideCard.GetComponent<Renderer>();
         AddButtonListeners();
         StartCoroutine(PlaceBets(0f));
     }
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Hand: " + playerScript.handValue.ToString();
         dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
         // Hide one of dealers cards
-        hideCard.GetComponent<Renderer>().enabled = true;
+        hideCardRenderer.enabled = true;
         // Adjust buttons visability
         dealBtn.gameObject.SetActive(false);
         betBtn.gameObject.SetActive(false);
@@ -221,7 +223,7 @@ public class GameManager : MonoBehaviour
 
         bool roundOver = true;
         //Reveal dealers card & show main text
-        hideCard.GetComponent<Renderer>().enabled = false;
+        hideCardRenderer.enabled = false;
         mainText.gameObject.SetActive(true);
         
         //All bust, bets returned
@@ -258,7 +260,7 @@ public class GameManager : MonoBehaviour
             // Set UI up for next hand/turn
             hitBtn.gameObject.SetActive(false);
             standBtn.gameObject.SetActive(false);
-            hideCard.GetComponent<Renderer>().enabled = false;
+            hideCardRenderer.enabled = false;
             dealerScoreText.gameObject.SetActive(true);
             cashText.text = "$" + playerScript.GetMoney().ToString();
             standClicks = 0;
