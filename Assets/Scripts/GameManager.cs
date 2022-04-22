@@ -41,12 +41,15 @@ public class GameManager : MonoBehaviour
     [Header ("Card Hiding dealers card")]
     [SerializeField] GameObject hideCard;
 
+    [Header ("Animations")]
+    [SerializeField] GameObject winAnimation;
+
     
 
     void Start()
     {
         AddButtonListeners();
-        PlaceBets();
+        StartCoroutine(PlaceBets(0f));
     }
 
     void AddButtonListeners()
@@ -191,7 +194,7 @@ public class GameManager : MonoBehaviour
     void HitDealer()
     {
         // deal card if dealers hand value is < 16 & there's room on the table
-        while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
+        while (dealerScript.handValue < 16 || dealerScript.handValue < playerScript.handValue && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
             dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
@@ -233,7 +236,7 @@ public class GameManager : MonoBehaviour
         {
             mainText.text = "You Win!";
             playerScript.AdjustMoney(pot);
-        
+            winAnimation.SetActive(true);
         }
         // check for tie, return bets
         else if(playerScript.handValue == dealerScript.handValue)
@@ -256,12 +259,14 @@ public class GameManager : MonoBehaviour
             cashText.text = "$" + playerScript.GetMoney().ToString();
             standClicks = 0;
             // Go to place bets stage after 3 seconds
-            Invoke("PlaceBets", 3f);
+            StartCoroutine(PlaceBets(3f));
         } 
     }
 
-    void PlaceBets()
+
+    IEnumerator PlaceBets(float delay)
     {
+        yield return new WaitForSeconds(delay);
         //Reset Round, hide text, prep for new hand
         playerScript.ResetHand();
         dealerScript.ResetHand();
@@ -291,8 +296,8 @@ public class GameManager : MonoBehaviour
         {
             decreaseBetBtn.gameObject.SetActive(true);
         }
+        // Reset animations
+        winAnimation.SetActive(false);
     }
-
-
-   
+    
 }
