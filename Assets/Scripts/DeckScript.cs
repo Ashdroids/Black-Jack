@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeckScript : MonoBehaviour
 {
-    public Sprite[] cardSprites;
+    [SerializeField] Sprite[] cardSprites;
     int[] cardValues = new int[53];
     int currentIndex = 0;
 
