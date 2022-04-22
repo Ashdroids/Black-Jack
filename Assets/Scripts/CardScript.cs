@@ -24,6 +24,7 @@ public class CardScript : MonoBehaviour
         value = newValue;
     }
 
+    // For Debugging
     public string GetSpriteName()
     {
         return spriteRenderer.sprite.name;
@@ -36,8 +37,6 @@ public class CardScript : MonoBehaviour
 
     public void ResetCard()
     {
-        Sprite back = GameObject.Find("Deck").GetComponent<DeckScript>().GetCardBack();
-        spriteRenderer.sprite = back;
         value = 0;
     }
 }
