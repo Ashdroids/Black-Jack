@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class CardScript : MonoBehaviour
 {
+    SpriteRenderer spriteRenderer;
+
     // Value of card, 2 of clubs = 2 etc
-    // public for debug purposes
     int value = 0;
+
+    void Start() 
+    {
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+    }
 
     public int GetValueOfCard()
     {
@@ -20,18 +26,18 @@ public class CardScript : MonoBehaviour
 
     public string GetSpriteName()
     {
-        return GetComponent<SpriteRenderer>().sprite.name;
+        return spriteRenderer.sprite.name;
     }
 
     public void SetSprite(Sprite newSprite)
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = newSprite;
+        spriteRenderer.sprite = newSprite;
     }
 
     public void ResetCard()
     {
         Sprite back = GameObject.Find("Deck").GetComponent<DeckScript>().GetCardBack();
-        gameObject.GetComponent<SpriteRenderer>().sprite = back;
+        spriteRenderer.sprite = back;
         value = 0;
     }
 }

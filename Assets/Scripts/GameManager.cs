@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button increaseBetBtn;
     [SerializeField] Button decreaseBetBtn;
 
-    [Header ("Player/dealer's script")]
+    [Header ("Other scripts")]
     [SerializeField] PlayerScript playerScript;
     [SerializeField] PlayerScript dealerScript;
     [SerializeField] DeckScript deckScript;
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
         deckScript.Shuffle();
         playerScript.StartHand();
         dealerScript.StartHand();
-        // Update scores displayed
+        // Update scores 
         scoreText.text = "Hand: " + playerScript.handValue.ToString();
         dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
         // Hide one of dealers cards
@@ -100,9 +100,13 @@ public class GameManager : MonoBehaviour
         //check there is still room on the table
         if(playerScript.cardIndex <= 10)
         {
+            // Remove double button
             doubleBtn.gameObject.SetActive(false);
+            // Deal card
             playerScript.GetCard();
+            // Update score
             scoreText.text ="Hand: " + playerScript.handValue.ToString();
+            // check if roundOver
             if(playerScript.handValue > 20) RoundOver();
         }
     }
@@ -140,7 +144,7 @@ public class GameManager : MonoBehaviour
         cashText.text = "$" + playerScript.GetMoney().ToString();
         pot += pot;
         betsText.text = "Pot: $" + pot.ToString();
-        // double/hit/stand button disappears
+        // Adjust buttons visability
         hitBtn.gameObject.SetActive(false);
         standBtn.gameObject.SetActive(false);
         doubleBtn.gameObject.SetActive(false);
@@ -193,7 +197,7 @@ public class GameManager : MonoBehaviour
 
     void HitDealer()
     {
-        // deal card if dealers hand value is < 16 & there's room on the table
+        // deal card if dealers hand value is < 16 or losing to player & there's room on the table
         while (dealerScript.handValue < 16 || dealerScript.handValue < playerScript.handValue && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
@@ -216,7 +220,7 @@ public class GameManager : MonoBehaviour
         if(standClicks < 2 && !playerBust && !dealerBust && !player21 && !dealer21 && !doubleClicked) {return;}
 
         bool roundOver = true;
-        //Reveal dealers card
+        //Reveal dealers card & show main text
         hideCard.GetComponent<Renderer>().enabled = false;
         mainText.gameObject.SetActive(true);
         
