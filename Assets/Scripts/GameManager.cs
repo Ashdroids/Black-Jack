@@ -141,9 +141,14 @@ public class GameManager : MonoBehaviour
         hitBtn.gameObject.SetActive(false);
         standBtn.gameObject.SetActive(false);
         doubleBtn.gameObject.SetActive(false);
-        // Deal card
-        HitClicked();
-        HitDealer();
+        // Deal cards
+        playerScript.GetCard();
+        scoreText.text ="Hand: " + playerScript.handValue.ToString();
+        while (dealerScript.handValue < 16)
+        {
+            dealerScript.GetCard();
+            dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
+        }
         // End Round
         doubleClicked = true;
         RoundOver();
