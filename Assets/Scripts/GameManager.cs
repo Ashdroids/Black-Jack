@@ -247,7 +247,7 @@ public class GameManager : MonoBehaviour
         // check for tie, return bets
         else if(playerScript.handValue == dealerScript.handValue)
         {
-            mainText.text = "Tie: Bets returned";
+            mainText.text = "Push: Bets returned";
             playerScript.AdjustMoney(pot/2);
         }
         else
