@@ -99,6 +99,12 @@ public class GameManager : MonoBehaviour
         increaseBetBtn.gameObject.SetActive(false);
         decreaseBetBtn.gameObject.SetActive(false);
 
+        // win if blackjack
+        if(playerScript.handValue == 21)
+        {
+            Invoke("RoundOver", 1f);
+        }
+
         // if 2 cards of same value are dealt, show split button
         // Create SplitClicked() to play 2 hands
         
