@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviour
     [Header ("Animations")]
     [SerializeField] GameObject winAnimation;
 
+    [Header ("Audio")]
+    [SerializeField] AudioClip winSFX;
+    
+
     
 
     void Start()
@@ -246,6 +250,7 @@ public class GameManager : MonoBehaviour
             mainText.text = "You Win!";
             playerScript.AdjustMoney(pot);
             winAnimation.SetActive(true);
+            GetComponent<AudioSource>().PlayOneShot(winSFX);
         }
         // check for tie, return bets
         else if(playerScript.handValue == dealerScript.handValue)
