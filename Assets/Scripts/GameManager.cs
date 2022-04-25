@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         // Hide dealer hand score and main text at start of deal
         mainText.gameObject.SetActive(false);
         dealerScoreText.gameObject.SetActive(false);
-        // Shuffle and deal
+        // Shuffle and deals
         deckScript.Shuffle();
         playerScript.StartHand();
         dealerScript.StartHand();
@@ -81,9 +81,12 @@ public class GameManager : MonoBehaviour
         // Hide one of dealers cards
         hideCardRenderer.enabled = true;
         // Adjust buttons visability
+        if(playerScript.GetMoney() >= (pot/2))
+        {
+            doubleBtn.gameObject.SetActive(true);
+        }
         dealBtn.gameObject.SetActive(false);
         betBtn.gameObject.SetActive(false);
-        doubleBtn.gameObject.SetActive(true);
         hitBtn.gameObject.SetActive(true);
         standBtn.gameObject.SetActive(true);
         standBtnText.text = "Stand";

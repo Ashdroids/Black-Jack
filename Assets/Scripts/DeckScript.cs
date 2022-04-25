@@ -38,14 +38,14 @@ public class DeckScript : MonoBehaviour
         // Iterate backwards to avoid Index 0 (Card Back)
         for (int i = cardSprites.Length -1; i > 0; --i)
         {
-            int j = Mathf.FloorToInt(Random.Range(1f, 52f));
+            int rnd = Mathf.FloorToInt(Random.Range(1f, 52f));
             Sprite face = cardSprites[i];
-            cardSprites[i] = cardSprites[j];
-            cardSprites[j] = face;
+            cardSprites[i] = cardSprites[rnd];
+            cardSprites[rnd] = face;
 
             int value = cardValues[i];
-            cardValues[i] = cardValues [j];
-            cardValues[j] = value;
+            cardValues[i] = cardValues [rnd];
+            cardValues[rnd] = value;
         } 
         currentIndex = 1;
     }
